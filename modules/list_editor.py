@@ -1,7 +1,4 @@
-
-
-
-
+import time
 
 
 class list_editor():
@@ -52,3 +49,8 @@ class list_editor():
 
     def clear_list(self):
         self.data=[]
+        print("Дані успішно видалено\n Створіть новий список!!!")
+        time.sleep(0.25)
+    def reverse_list(self):
+        self.data=self.data[::-1]
+        self.show_list()

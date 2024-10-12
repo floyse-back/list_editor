@@ -9,10 +9,12 @@ class App(list_editor):
         self.create_data(data)
         self.list_command()
 
-
+    """Меню списку команд"""
     def list_command(self):
+        if len(self.data)==0:
+            self.start_app()
         time.sleep(1)
-        print("\n\n\nМеню вибору\n0.Вивести список чисел\n1.Створити список:\n2.Додати елемент(и)\n3.Видалити елемент(и)\n4.Список + Список \n5.Сортування елементів \n6.Очистити список\n7.Закінчити роботу")
+        print("\n\n\nМеню вибору\n0.Вивести список чисел\n1.Створити список:\n2.Додати елемент(и)\n3.Видалити елемент(и)\n4.Список + Список \n5.Сортування елементів \n6.Очистити список\n7.Перевернути список \n8.Закінчити роботу")
         answer=input("Введіть номер операції: ")
         if answer=='0':
             self.show_list()
@@ -27,7 +29,7 @@ class App(list_editor):
         elif answer=='4':
             self.concate_menu()
         elif answer=='5':
-            swap=bool(input("Введіть чи False - якщо порядок спадання введіть True порядок зростання"))
+            swap=bool(input("Введіть False - якщо порядок спадання введіть True порядок зростання:"))
             if swap=="True":
                 swap=True
             else:
@@ -38,12 +40,14 @@ class App(list_editor):
             self.clear_list()
             self.list_command()
         elif answer=='7':
+            self.reverse_list()
+        elif answer=='8':
             self.close_list()
         else:
             print("Ви ввели щось не то")
             self.list_command()
 
-
+    """Меню додавання елемента"""
     def add_menu(self):
         while_check=0
         element=input("Введіть елемент: ")
@@ -75,10 +79,10 @@ class App(list_editor):
             if len(self.data)!=0:
                 for i,value in enumerate(self.data):
                     print(f"{i}.{value}")
-                val=input("Введіть позицію")
+                val=input("Введіть позицію: ")
                 while int(val)>=len(self.data):
                     print(f"Введіть число від 0 до {len(self.data)-1}")
-                    val=int(input("Введіть позицію"))
+                    val=int(input("Введіть позицію: "))
                 self.delete_element(int(val))
             else:
                 print("Створіть список для початку")
@@ -91,7 +95,7 @@ class App(list_editor):
     def close_list(self):
         print("Пока")
     def concate_menu(self):
-        my_input=list(input("Введіть масив який хочете добавити").split(','))
+        my_input=list(input("Введіть масив який хочете добавити: ").split(','))
         self.concate_list(my_input)
         self.list_command()
 
