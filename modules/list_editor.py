@@ -1,13 +1,38 @@
-import time
+import os
+import ast
+
+
 
 
 class list_editor():
     def __init__(self):
         self.data=[]
+        self.history=self.read_history()
     """Створення списку"""
     def create_data(self,data:list=[1,2,3]):
         self.data=data
         self.show_list()
+    def write_history(self):
+        try:
+            with open('history.txt','a',encoding='utf-8') as file:
+                if len(self.history)>0:
+                    file.write(f'{self.history[-1]}\n')
+        except Exception as ex:print(f"{ex}- Error Write History")
+    def delete_history(self):
+        try:
+            os.remove('history.txt')
+        except:print("Error don`t delete history")
+    def read_history(self):
+        newlist=[]
+        try:
+            with open('history.txt','r',encoding='utf-8') as file:
+                for i in file.readlines():
+                    txt = ast.literal_eval(i)
+                    newlist.append(txt)
+            return newlist
+        except Exception as ex:
+            print(f"Error Read_history\n {ex} ")
+            return []
 
     """Додавання елементу до списку"""
     def add_element(self,element,position=None,swap=False):
@@ -49,8 +74,5 @@ class list_editor():
 
     def clear_list(self):
         self.data=[]
-        print("Дані успішно видалено\n Створіть новий список!!!")
-        time.sleep(0.25)
-    def reverse_list(self):
-        self.data=self.data[::-1]
-        self.show_list()
+
+
