@@ -2,8 +2,6 @@ import os
 import ast
 
 
-
-
 class list_editor():
     def __init__(self):
         self.data=[]
@@ -12,10 +10,18 @@ class list_editor():
     def create_data(self,data:list=[1,2,3]):
         self.data=data
         self.show_list()
-    def write_history(self):
+    def read_full_history(self):
+        try:
+            with open("history.txt",'r',encoding='utf-8') as file:
+                for i in file.readlines():
+                    print(i.replace('\n',''))
+        except FileNotFoundError:
+            print("Історія порожня")
+    def write_history(self,value):
         try:
             with open('history.txt','a',encoding='utf-8') as file:
                 if len(self.history)>0:
+                    file.write(f'{value}\n')
                     file.write(f'{self.history[-1]}\n')
         except Exception as ex:print(f"{ex}- Error Write History")
     def delete_history(self):
@@ -27,11 +33,12 @@ class list_editor():
         try:
             with open('history.txt','r',encoding='utf-8') as file:
                 for i in file.readlines():
-                    txt = ast.literal_eval(i)
-                    newlist.append(txt)
+                    if str(i)[0]=='[':
+                        txt = ast.literal_eval(i)
+                        newlist.append(txt)
             return newlist
         except Exception as ex:
-            print(f"Error Read_history\n {ex} ")
+            #print(f"Error Read_history\n {ex} ")
             return []
 
     """Додавання елементу до списку"""
