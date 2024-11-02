@@ -1,33 +1,39 @@
 import os
 import ast
-
-
+import datetime
 class list_editor():
-    def __init__(self):
-        self.data=[]
-        self.history=self.read_history()
-    """Створення списку"""
-    def create_data(self,data:list=[1,2,3]):
-        self.data=data
-        self.show_list()
+    def Create_Time_List(self,data):
+        new_list=[]
+        for i in range(0,len(data)-1,2):
+            new_list.append((data[i],ast.literal_eval(data[i+1])))
+        return new_list
+
+
     def read_full_history(self):
         try:
+            data=[]
             with open("history.txt",'r',encoding='utf-8') as file:
                 for i in file.readlines():
-                    print(i.replace('\n',''))
+                    data.append(i.replace('\n',''))
+            return data
         except FileNotFoundError:
             print("Історія порожня")
-    def write_history(self,value):
+
+
+    def write_history(self,content):
         try:
             with open('history.txt','a',encoding='utf-8') as file:
-                if len(self.history)>0:
-                    file.write(f'{value}\n')
-                    file.write(f'{self.history[-1]}\n')
+                now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                file.write(f"Time: {now}\n")
+                file.write(f'{content}\n')
         except Exception as ex:print(f"{ex}- Error Write History")
+
     def delete_history(self):
         try:
             os.remove('history.txt')
         except:print("Error don`t delete history")
+
+
     def read_history(self):
         newlist=[]
         try:
@@ -41,45 +47,22 @@ class list_editor():
             #print(f"Error Read_history\n {ex} ")
             return []
 
-    """Додавання елементу до списку"""
-    def add_element(self,element,position=None,swap=False):
-        if position is None or position =="None":
-            self.data.append(element)
-            return f"Успішно добавлено елемент в кінець поточного списку {element} в список"
-        if swap:
-            self.data[position]=element
-        else:
-            newdata=[]
-            for i in range(0,len(self.data)):
-                if i==position:
-                    newdata.append(element)
-                newdata.append(self.data[i])
-            self.data=newdata
-    """Видалення елементу за позицією"""
-    def delete_element(self,position:int):
-        self.data.pop(position)
-        self.show_list()
-    def concate_list(self,list_add):
-        for i in list_add:
-            self.data.append(i)
-        self.show_list()
 
-    def sort_list(self,**kwargs):
-        intdata=[]
-        try:
-            intdata=list(map(int,self.data))
-        except:"Не судьба"
-        if intdata!=[]:
-            intdata.sort(**kwargs)
-            self.data=list(map(str,intdata))
-        else:
-            self.data.sort(**kwargs)
-        self.show_list()
-
-    def show_list(self):
-        print(self.data)
-
-    def clear_list(self):
-        self.data=[]
-
-
+    def typed_list(self,data:list,reverse=True):
+        float_and_int_list=[]
+        string_list=[]
+        for i in data:
+            typed=i[0]
+            index=i[1]
+            try:
+                ft=float(typed)
+                try:
+                    el_int=int(typed)
+                    float_and_int_list.append((el_int,index))
+                except:
+                    float_and_int_list.append((ft,index))
+            except:
+                string_list.append(i)
+        float_and_int_list.sort(reverse=reverse)
+        string_list.sort(reverse=reverse)
+        return float_and_int_list +string_list
