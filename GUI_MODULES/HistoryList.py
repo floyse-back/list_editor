@@ -1,6 +1,4 @@
 import flet as ft
-from anyio.abc import value
-from flet_core.colors import TRANSPARENT
 
 from modules.list_editor import list_editor
 
@@ -46,12 +44,14 @@ class HistoryList(ft.Column):
             self.page.update()
         self.page.snack_bar = ft.SnackBar(
             content=ft.Text(color=ft.colors.WHITE,value="Copied",size=30,font_family="Roboto",weight="bold",text_align="center"),
-            action="Alright",
             behavior=ft.SnackBarBehavior.FLOATING,
             bgcolor=ft.colors.GREEN,
             width=400,
             margin=90,
-            duration=1500,
+            duration=750,
+            shape=ft.RoundedRectangleBorder(
+                radius=10
+            ),
             elevation=6,
         )
         history_list=self.list_editor.Create_Time_List(self.full_history)
@@ -67,7 +67,7 @@ class HistoryList(ft.Column):
             row2=ft.Row(
                 controls=[
                     ft.TextField(
-                        width=300,
+                        width='auto',
                         value=f"{history_list}",
                         bgcolor=ft.colors.WHITE24,
                         disabled=True,

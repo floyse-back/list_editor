@@ -22,7 +22,13 @@ class CustomCard(ft.Card):
         #Ref
         self.ListBut = ElevateButs(self.sizeRef, self.dropdownRef, self.page)
         super().__init__(
-                ref=self.Card)
+                ref=self.Card,
+                width=500,
+                margin=ft.margin.only(top=5,bottom=5),
+                shadow_color=ft.colors.WHITE24,
+                surface_tint_color=ft.colors.GREEN_500,
+                show_border_on_foreground=True,
+                )
         if self.route=="/":
             self.HomePage()
         elif self.route=="/history":
@@ -44,7 +50,6 @@ class CustomCard(ft.Card):
                 )
             ]
         )
-
 
 
 
@@ -96,7 +101,7 @@ class CustomCard(ft.Card):
             self.ListBut.dissabled_correct_icons()
         self.Card.current.content=ft.Column(
                     scroll="auto",
-                    height=750,
+                    height=700,
                     horizontal_alignment='center',
                     controls=[
                         ft.Row(
@@ -129,7 +134,7 @@ class CustomCard(ft.Card):
                             controls=[
                                 ft.TextField(
                                     ref=self.field,
-                                    width=120,
+                                    width="auto",
                                     bgcolor=ft.colors.WHITE24,
                                     border_color=ft.colors.WHITE54,
                                     on_blur=self.Text_Upload,
@@ -152,7 +157,7 @@ class CustomCard(ft.Card):
                                         ],
                                         alignment="center",
                                     ),
-                                    width=150,
+                                    width="auto",
                                     height="auto",
                                     on_click=self.Text_Upload
                                 )
@@ -180,7 +185,7 @@ class CustomCard(ft.Card):
                                         ],
                                         alignment="center",
                                     ),
-                                    width=150,
+                                    width="auto",
                                     height="auto",
                                 ),
                                 ft.ElevatedButton(
@@ -201,14 +206,14 @@ class CustomCard(ft.Card):
                                         ],
                                         alignment="center",
                                     ),
+                                    width="auto",
                                     height="auto",
                                 )
                             ],
                             alignment="center",
                         ),
                         ft.Row(
-                            controls=[
-                                ft.Dropdown(
+                            controls=[ft.Dropdown(
                                     ref=self.dropdownRef,
                                     options=[
                                         ft.dropdown.Option("Cвій порядок"),
@@ -217,8 +222,7 @@ class CustomCard(ft.Card):
                                         ft.dropdown.Option("Перевернути список"),                                    ],
                                     bgcolor=ft.colors.WHITE24,
                                     on_change=value_get,
-                                ),
-                            ],
+                                )],
                             alignment="center",
                         ),
                         ft.Row(
@@ -240,6 +244,7 @@ class CustomCard(ft.Card):
                             alignment="center",
 
                         ),
-                    ])
+                    ]
+                )
 
 

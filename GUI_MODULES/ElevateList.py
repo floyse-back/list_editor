@@ -4,7 +4,7 @@ import flet as ft
 from modules.list_editor import list_editor
 
 class ElevateButs(ft.Column):
-    def __init__(self,sizeRef:ft.Ref[ft.Text](),dropdownRef:ft.Ref[ft.Dropdown](),page):
+    def __init__(self,sizeRef:ft.Ref[ft.Text](),dropdownRef:ft.Ref[ft.Dropdown](),page:ft.Page):
         super().__init__()
         #
         self.last_value_textfield=[]
@@ -33,7 +33,7 @@ class ElevateButs(ft.Column):
             self.page.update()
 
 
-        #self.dissabled_correct_icons()
+
 
     def add_button(self,val="",up=True):
         if up:
@@ -48,7 +48,7 @@ class ElevateButs(ft.Column):
             border_width=2,
             border_radius=10,
             label="ADD",
-            width=250,
+            width="auto",
             text_size=25,
             on_blur=lambda e: self.get_list()
         )
@@ -129,14 +129,12 @@ class ElevateButs(ft.Column):
                 if str(data[ind])!=str(text):
                     answer.append((text,ind))
             self.change_value_textfield(answer)
-
-
-
         self.value_text_fields=[]
         for controls in self.controls:
             temp=controls.controls[0].value
             self.value_text_fields.append(temp)
-
+        if self.value_text_fields:
+            check_all(self.value_text_fields)
     def Listlength(self):
         return len(self.controls)
 

@@ -15,7 +15,9 @@ def main(page:ft.Page):
                     appbar=Header(page, "Hello"),
                     controls=[
                         CustomCard(page,"/")
-                    ]
+                    ],
+                    horizontal_alignment="center",
+                    vertical_alignment="center",
                 )
             )
         if page.route =="/go":
@@ -27,8 +29,9 @@ def main(page:ft.Page):
                     appbar=Header(page, "History"),
                     controls=[
                         CustomCard(page,"/history")
-                    ]
-                    
+                    ],
+                    horizontal_alignment="center",
+                    vertical_alignment="center",
                 )
             )
         page.update()
