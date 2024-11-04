@@ -37,7 +37,7 @@ class CustomCard(ft.Card):
     def history(self):
         self.Card.current.content=ft.Column(
             scroll="auto",
-            height=750,
+            height=650,
             horizontal_alignment="center",
             controls=[
                 ft.Row(
@@ -57,24 +57,30 @@ class CustomCard(ft.Card):
     #To Homepage
     def Text_Upload(self,event):
         if self.last_event == "blur" and event.name == "click":
-            pass
+            return 0
         else:
-            # Блокуємо кнопку, щоб уникнути повторного натискання
             self.Add_but.current.disabled = True
             self.update_button_state()
-
-            # Додаємо кнопку до списку
             self.ListBut.add_button(val=self.field.current.value)
-
             self.field.current.value = ''
             self.field.current.update()
-
             self.sizeRef.current.value = f"Розмір списку {self.ListBut.Listlength()}"
             self.sizeRef.current.update()
-
+            self.value_get("event")
             self.lock_button_temporarily(self.Add_but.current)
-
         self.last_event = event.name
+
+    def value_get(self,event):
+        if "Перевернути список" == self.dropdownRef.current.value:
+            if event == "event":
+                return 0
+            else:
+                self.ListBut.reverse_list()
+        elif "Порядок зростання" == self.dropdownRef.current.value:
+            self.ListBut.sorted_list(reverse=False)
+        elif "Порядок спадання" == self.dropdownRef.current.value:
+            self.ListBut.sorted_list(reverse=True)
+        self.ListBut.dissabled_correct_icons()
     def lock_button_temporarily(self, button, lock_duration=0.04):
         # Блокуємо кнопку
         button.disabled = True
@@ -91,17 +97,9 @@ class CustomCard(ft.Card):
         # Оновлюємо стан кнопки
         self.Add_but.current.update()
     def HomePage(self):
-        def value_get(event):
-            if "Перевернути список"==self.dropdownRef.current.value:
-                self.ListBut.reverse_list()
-            elif "Порядок зростання"==self.dropdownRef.current.value:
-                self.ListBut.sorted_list(reverse=False)
-            elif "Порядок спадання"==self.dropdownRef.current.value:
-                self.ListBut.sorted_list(reverse=True)
-            self.ListBut.dissabled_correct_icons()
         self.Card.current.content=ft.Column(
                     scroll="auto",
-                    height=700,
+                    height=650,
                     horizontal_alignment='center',
                     controls=[
                         ft.Row(
@@ -125,10 +123,10 @@ class CustomCard(ft.Card):
                                 ),
                                 ft.Icon(
                                     name=ft.icons.LIST,
-                                    size=25,
+                                    size=30,
                                 )
                             ],
-                            alignment="center",
+                            alignment="justify",
                         ),
                         ft.Row(
                             controls=[
@@ -139,74 +137,78 @@ class CustomCard(ft.Card):
                                     border_color=ft.colors.WHITE54,
                                     on_blur=self.Text_Upload,
                                 ),
-                                ft.ElevatedButton(
-                                    ref=self.Add_but,
-                                    bgcolor=ft.colors.GREEN,
-                                    content=ft.Row(
-                                        controls=[
-                                            ft.Icon(
-                                                name=ft.icons.ADD,
-                                                size=35,
-                                            ),
-                                            ft.Text(
-                                                value="ADD",
-                                                size=35,
-                                                weight="bold",
-                                                font_family="Roboto"
-                                            ),
-                                        ],
-                                        alignment="center",
-                                    ),
-                                    width="auto",
-                                    height="auto",
-                                    on_click=self.Text_Upload
-                                )
                             ],
                             alignment="center",
                         ),
                         ft.Row(
+                            wrap=True,
                             controls=[
                                 ft.ElevatedButton(
+                                    ref=self.Add_but,
+                                    bgcolor=ft.colors.BLUE_ACCENT,
+                                    color=ft.colors.WHITE,
+                                    content=ft.Row(
+                                        controls=[
+                                            ft.Icon(
+                                                name=ft.icons.ADD,
+                                                size=25,
+                                            ),
+                                            ft.Text(
+                                                value="ADD",
+                                                size=25,
+                                                weight="bold",
+                                                font_family="Roboto"
+                                            ),
+                                        ],
+                                        alignment="center",
+                                    ),
+                                    width=130,
+                                    height="auto",
+                                    on_click=self.Text_Upload
+                                ),
+                                ft.ElevatedButton(
                                     ref=self.SaveRef,
+                                    color=ft.colors.WHITE,
                                     on_click=self.ListBut.saveStorage,
-                                    bgcolor=ft.colors.GREEN,
+                                    bgcolor=ft.colors.BLUE_800,
                                     content=ft.Row(
                                         controls=[
                                             ft.Icon(
                                                 name=ft.icons.SAVE,
-                                                size=35,
+                                                size=25,
                                             ),
                                             ft.Text(
                                                 value="Save",
-                                                size=35,
+                                                size=25,
                                                 weight="bold",
                                                 font_family="Roboto"
                                             ),
                                         ],
                                         alignment="center",
                                     ),
-                                    width="auto",
+                                    width=130,
                                     height="auto",
                                 ),
                                 ft.ElevatedButton(
                                     on_click=self.ListBut.clear_list,
-                                    bgcolor=ft.colors.RED,
+                                    bgcolor=ft.colors.ORANGE,
+                                    color=ft.colors.WHITE,
                                     content=ft.Row(
                                         controls=[
                                             ft.Icon(
                                                 name=ft.icons.CLEAR_ALL,
-                                                size=35,
+                                                size=25,
                                             ),
                                             ft.Text(
                                                 value="Clear",
-                                                size=35,
+                                                size=25,
                                                 weight="bold",
                                                 font_family="Roboto"
                                             ),
                                         ],
                                         alignment="center",
                                     ),
-                                    width="auto",
+                                    width=130,
                                     height="auto",
                                 )
                             ],
@@ -221,7 +223,7 @@ class CustomCard(ft.Card):
                                         ft.dropdown.Option("Порядок зростання"),
                                         ft.dropdown.Option("Перевернути список"),                                    ],
                                     bgcolor=ft.colors.WHITE24,
-                                    on_change=value_get,
+                                    on_change=self.value_get,
                                 )],
                             alignment="center",
                         ),

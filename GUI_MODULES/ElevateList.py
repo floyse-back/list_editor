@@ -25,14 +25,13 @@ class ElevateButs(ft.Column):
 
     def create_Buttons(self,content:list):
         if not content:
-            return
+            return 0
         self.controls.clear()
         for i in content:
             self.add_button(val=i,up=False)
         if self.controls:
+            self.dissabled_correct_icons()
             self.page.update()
-
-
 
 
     def add_button(self,val="",up=True):
@@ -48,7 +47,7 @@ class ElevateButs(ft.Column):
             border_width=2,
             border_radius=10,
             label="ADD",
-            width="auto",
+            width=200,
             text_size=25,
             on_blur=lambda e: self.get_list()
         )
@@ -105,7 +104,7 @@ class ElevateButs(ft.Column):
 
     def check_once(self,element):
         try:
-            new_eval=eval(element)
+            new_eval=eval(element,{"__builtins__": None}, {})
             if new_eval==element:
                 return element
             else:
@@ -119,7 +118,7 @@ class ElevateButs(ft.Column):
 
             for v,i in enumerate(data):
                 try:
-                    swap=eval(i)
+                    swap=eval(i,{"__builtins__": None}, {})
                     new_list.append((swap,v))
                 except:
                     pass
@@ -149,7 +148,7 @@ class ElevateButs(ft.Column):
             self.controls[i].controls[2].controls[0].disabled = up
             self.controls[i].controls[2].controls[1].disabled = down
         if self.controls:  # Переконайтеся, що контролі існують
-            self.update()
+            self.page.update()
 
 
 
@@ -171,6 +170,7 @@ class ElevateButs(ft.Column):
         self.controls[ind-1]=temp
         self.update()
         self.dissabled_correct_icons()
+
     def Down_Go(self,event,key):
         def find_control():
             for i, controls in enumerate(self.controls):
@@ -186,8 +186,7 @@ class ElevateButs(ft.Column):
 
 
     def clear_list(self, event):
-        # Очищення списку, створюючи новий порожній список
-        self.controls = []  # Призначаємо новий порожній список
+        self.controls = []
         self.sizeRef.current.value = f"Розмір списку {self.Listlength()}"
         self.sizeRef.current.update()
         self.update()

@@ -90,7 +90,7 @@ class HistoryList(ft.Column):
             ft.Row(
                 controls=[
             ft.ElevatedButton(
-                bgcolor=ft.colors.RED,
+                bgcolor=ft.colors.ORANGE,
                 color=ft.colors.WHITE,
                 on_click=self.clear_history,
                 content=ft.Row(
@@ -98,7 +98,8 @@ class HistoryList(ft.Column):
                     ft.Icon(
                         name=ft.icons.CLEAR_ALL,
                     ),
-                    ft.Text(value="Clear",weight="bold",size=40,font_family="Roboto",text_align="center",width=250),
+                    ft.Text(value="Clear",weight="bold",size=40,font_family="Roboto",text_align="center",
+                            width=250),
                 ],
                 )
             )],

@@ -12,7 +12,7 @@ def main(page:ft.Page):
             page.views.append(
                 ft.View(
                     route="/",
-                    appbar=Header(page, "Hello"),
+                    appbar=Header(page, "ListEditor"),
                     controls=[
                         CustomCard(page,"/")
                     ],

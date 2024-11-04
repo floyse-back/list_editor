@@ -29,11 +29,12 @@ def Header(page:ft.Page,title):
                           selected=selected_list[i]["selected"],
                           ),
         )
+    """
     app.actions.append(
         ft.IconButton(icon=ft.icons.EXIT_TO_APP,
                       on_click=lambda e: page.window_close(),
                       padding=10,
                       icon_size=30,
                       ),
-    )
+    )"""
     return app
