@@ -57,7 +57,7 @@ class CustomCard(ft.Card):
     #To Homepage
     def Text_Upload(self,event):
         if self.last_event == "blur" and event.name == "click":
-            return 0
+            self.last_event = event.name
         else:
             self.Add_but.current.disabled = True
             self.update_button_state()
